@@ -3,74 +3,69 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#0c1418">
-<title>StudyGuard</title>
+<title>StudyGuard v4</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#0c1418;color:#f2f6f5;
 font-family:-apple-system,"Hiragino Kaku Gothic ProN",sans-serif}
-.app{max-width:560px;margin:auto;padding:24px 17px}
-header{display:flex;justify-content:space-between;
-align-items:center;margin-bottom:28px}
-header strong{font-size:22px}
-header small,.muted{color:#a1b2b1}
-h1{font-size:27px;margin:5px 0}
-.muted{font-size:13px;line-height:1.7}
-.card{border:1px solid #2a3b3e;background:#152127;
+.app{max-width:550px;margin:auto;padding:24px 16px}
+header{display:flex;justify-content:space-between;align-items:center}
+header strong{font-size:23px}
+small,.muted{color:#9aafaf}
+h1{font-size:27px;margin:24px 0 6px}
+.muted{font-size:13px;line-height:1.6}
+.card{background:#152127;border:1px solid #2a3b3e;
 border-radius:18px;padding:19px;margin-top:16px}
-.label{font-size:12px;font-weight:bold;color:#b5c7c7}
-.timer{text-align:center;font-size:46px;font-weight:bold;
-margin:15px 0;font-variant-numeric:tabular-nums}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);
-gap:8px;text-align:center}
-.stats div{background:#0c161b;border-radius:12px;padding:12px 3px}
+.label{font-size:12px;font-weight:bold;color:#a9c2c0}
+.timer{font-size:45px;text-align:center;font-weight:bold;
+font-variant-numeric:tabular-nums;margin:17px 0}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.stats div{background:#0c171c;border-radius:12px;
+padding:12px 3px;text-align:center}
 .stats strong{display:block;font-size:17px}
-.stats span{display:block;font-size:11px;color:#99aeaf}
+.stats span{font-size:11px;color:#a0b5b7}
 video{width:100%;aspect-ratio:4/3;object-fit:cover;
-background:#05090c;border-radius:15px;transform:scaleX(-1)}
-.status{font-weight:bold;color:#8ce7cf;margin:10px 0}
-.warning{color:#ffba84}
-.error{color:#ff9e9e}
-button,select{font-family:inherit}
-button{cursor:pointer;border:0;border-radius:13px;
-padding:15px;font-size:15px;font-weight:bold}
+border-radius:14px;background:#050b0f;transform:scaleX(-1)}
+.status{font-weight:bold;color:#88e5ca;margin:12px 0 5px}
+.warn{color:#ffbc84}
+.error{color:#ff9898}
+button{border:0;border-radius:12px;padding:14px;
+font-size:14px;font-weight:bold;cursor:pointer}
 button:disabled{opacity:.45}
-.primary{background:#87e4c9;color:#062a21;
-width:100%;margin:15px 0}
-.buttons{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.secondary{background:#263b43;color:#e4f1ee}
-.settings{display:flex;gap:10px;flex-wrap:wrap;
-align-items:center;margin-top:13px}
-select{background:#20313a;color:white;padding:8px;
-border:1px solid #446069;border-radius:8px}
-.settings label{font-size:13px}
+.primary{width:100%;background:#89e7cb;color:#082a22;margin-top:15px}
+.secondary{background:#29404a;color:#edf5f4}
+.buttons{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:9px}
+label{font-size:13px}
+select{padding:9px;background:#233740;color:white;
+border:1px solid #45606a;border-radius:8px}
+.settings{display:flex;flex-wrap:wrap;gap:12px;
+align-items:center;margin-top:14px}
+.notice{background:#34271e;border-radius:12px;
+padding:12px;color:#ffd4a9;font-size:12px;line-height:1.6}
 .history{padding:0;list-style:none}
-.history li{padding:13px 4px;
-border-top:1px solid #34464d;font-size:13px}
-.notice{background:#32251f;color:#ffd7ad;
-border-radius:12px;padding:12px;font-size:13px;line-height:1.6}
+.history li{padding:12px 0;border-top:1px solid #34454a;
+font-size:13px}
 </style>
 </head>
 <body>
 <div class="app">
-
 <header>
 <strong>◉ StudyGuard</strong>
-<small>STUDY MONITOR</small>
+<small>v4 · 安定化版</small>
 </header>
 
-<div class="label">FOCUS SESSION</div>
 <h1>集中を、続けよう。</h1>
-<p class="muted">iPhoneを机に立て、上半身をカメラに映してください。</p>
+<p class="muted">iPhoneを机に立てて、上半身が映るようにしてください。</p>
 
 <section class="card">
 <div class="label">学習セッション</div>
 <div class="timer" id="timer">00:00:00</div>
 <div class="stats">
-<div><strong id="present">00:00</strong><span>在席推定</span></div>
+<div><strong id="present">00:00</strong><span>在席</span></div>
 <div><strong id="away">00:00</strong><span>離席・切替</span></div>
-<div><strong id="warnings">0回</strong><span>注意回数</span></div>
+<div><strong id="warnings">0回</strong><span>注意</span></div>
 </div>
 </section>
 
@@ -78,93 +73,90 @@ border-radius:12px;padding:12px;font-size:13px;line-height:1.6}
 <div class="label">LIVE CAMERA</div>
 <video id="video" autoplay muted playsinline></video>
 <p class="status" id="status">● 監視待機中</p>
-<p class="muted" id="message">映像は保存・送信しません。</p>
-<p class="muted" id="audioState">警報音：未準備</p>
+<p class="muted" id="message">カメラはまだ起動していません。</p>
+<p class="muted" id="diagnostic">カメラ状態：待機中</p>
 </section>
 
-<button id="start" class="primary">▶ 監視を開始する</button>
+<button class="primary" id="start">▶ 監視を開始する</button>
 <div class="buttons">
-<button id="break" class="secondary" disabled>☕ 休憩する</button>
-<button id="finish" class="secondary" disabled>■ 終了・保存</button>
+<button class="secondary" id="break" disabled>☕ 休憩</button>
+<button class="secondary" id="finish" disabled>■ 終了・保存</button>
 </div>
+<button class="secondary" id="repair"
+style="width:100%;margin-top:9px" disabled>
+↻ カメラを再接続
+</button>
 
 <section class="card">
 <div class="label">監視設定</div>
 <div class="settings">
-<label>注意まで
+<label>離席警告まで
 <select id="threshold">
-<option value="10">10秒（厳しい）</option>
-<option value="30" selected>30秒（普通）</option>
-<option value="60">60秒（優しい）</option>
+<option value="10">10秒</option>
+<option value="30" selected>30秒</option>
+<option value="60">60秒</option>
 </select>
 </label>
-<label><input type="checkbox" id="voice" checked> 音声注意</label>
 </div>
-<button id="test" class="secondary"
-style="width:100%;margin-top:14px">
-🔊 音声＋アラームテスト
-</button>
-<p class="muted">
-監視開始時に短い確認音が鳴ります。
-音声注意をOFFにしても警報音は鳴ります。
+<div class="buttons">
+<button class="secondary" id="record">🎙 注意音声を録音</button>
+<button class="secondary" id="test">🔊 アラームテスト</button>
+</div>
+<p class="muted" id="recordStatus">
+録音なしの場合はアラームだけが鳴ります。
 </p>
 </section>
 
 <section class="card">
-<div class="label">学習履歴（直近10回）</div>
-<ul class="history" id="history"></ul>
+<div class="label">学習履歴</div>
+<ul id="history" class="history"></ul>
 </section>
 
 <p class="notice">
-別アプリを使用した時間は、戻った際に離席時間として記録します。
-iPhoneの制限により、別アプリを開いている間の警報は保証できません。
-復帰後は「監視を再開する」を押してください。
+カメラが止まったときは自動復旧を試みます。
+復旧できない場合は「カメラを再接続」を押してください。
+他のアプリを開いた時間は離席として記録します。
+映像や録音は外部サーバーへ送信しません。
 </p>
 </div>
 
 <script type="module">
-const $=id=>document.getElementById(id);
 
-const BASE='https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.22-rc.20250304';
-const MODEL='https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_lite/float16/1/pose_landmarker_lite.task';
+const $ = id => document.getElementById(id);
+
+const BASE =
+'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.22-rc.20250304';
+
+const MODEL =
+'https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_lite/float16/1/pose_landmarker_lite.task';
 
 const HISTORY='studyguard_history';
-const SETTINGS='studyguard_settings';
+const VOICE='studyguard_recorded_voice';
+const SETTINGS='studyguard_v4_settings';
 
-function read(key,defaultValue){
-  try{
-    return JSON.parse(localStorage.getItem(key))??defaultValue;
-  }catch{
-    return defaultValue;
-  }
+function read(key, fallback){
+  try{return JSON.parse(localStorage.getItem(key))??fallback}
+  catch{return fallback}
 }
 
-const settings=read(SETTINGS,{});
-$('threshold').value=settings.threshold||'30';
-$('voice').checked=settings.voice!==false;
-
-function saveSettings(){
+$('threshold').value=read(SETTINGS,{threshold:'30'}).threshold;
+$('threshold').onchange=()=>{
   localStorage.setItem(SETTINGS,JSON.stringify({
-    threshold:$('threshold').value,
-    voice:$('voice').checked
+    threshold:$('threshold').value
   }));
-}
-$('threshold').onchange=saveSettings;
-$('voice').onchange=saveSettings;
+};
 
 let detector=null,stream=null,session=null;
 let phase='idle';
-let lastSeen=0,awaySince=0,foundFrames=0;
-let warned=false,pendingCamera=false;
-let backgroundAt=0,lastFrame=0,frameId=0;
+let frameId=0,lastInfer=0;
+let lastSeen=0,awaySince=0,foundCount=0;
+let presentConfirmed=false,warned=false;
+let pendingCamera=false,backgroundAt=0;
+let lastVideoTime=-1,lastAdvanceAt=0;
+let captureStartedAt=0,recoveryCount=0;
+let recovering=false,detectErrors=0;
 
-let alarmAudio=null,alarmURL=null;
-let alarmWanted=false,alertToken=0;
-let voiceTimeout=null,testTimeout=null;
-
-// ========================================
-// 表示
-// ========================================
+const video=$('video');
 
 function status(title,message,type=''){
   $('status').textContent=title;
@@ -181,347 +173,307 @@ function hms(n){
   ].map(x=>String(x).padStart(2,'0')).join(':');
 }
 
-function short(n){return hms(n).slice(3)}
-
 function render(){
   if(session){
     $('timer').textContent=hms(session.elapsed);
-    $('present').textContent=short(session.present);
-    $('away').textContent=short(session.away);
+    $('present').textContent=hms(session.present);
+    $('away').textContent=hms(session.away);
     $('warnings').textContent=session.warnings+'回';
   }
-
   $('start').textContent=
     phase==='running'?'✓ 監視中':
-    phase==='loading'?'読み込み中…':
+    phase==='starting'?'起動中…':
     phase==='idle'?'▶ 監視を開始する':
     '▶ 監視を再開する';
 
-  $('start').disabled=
-    ['running','loading','background'].includes(phase);
+  $('start').disabled=['running','starting','recovering','background'].includes(phase);
+  $('break').disabled=!session||['starting','recovering','background'].includes(phase);
+  $('finish').disabled=!session||['starting','recovering','background'].includes(phase);
+  $('repair').disabled=!session||['starting','recovering','background','break'].includes(phase);
 
-  $('break').disabled=
-    !session||['loading','background'].includes(phase);
-
-  $('break').textContent=
-    phase==='break'?'▶ 休憩を終了':'☕ 休憩する';
-
-  $('finish').disabled=
-    !session||['loading','background'].includes(phase);
+  $('break').textContent=phase==='break'?'▶ 休憩終了':'☕ 休憩';
 }
 
-// ========================================
-// WAVアラーム音を生成
-// ========================================
+// ======================================
+// アラーム音（HTML Audio）
+// ======================================
 
-function createAlarmWav(){
-  const sampleRate=22050;
-  const duration=1.25;
-  const count=Math.floor(sampleRate*duration);
+let alarm=null,recorded=null;
+let alertWanted=false,soundToken=0;
+let soundFallback=null;
 
-  const buffer=new ArrayBuffer(44+count*2);
-  const view=new DataView(buffer);
-
-  function word(offset,text){
-    for(let i=0;i<text.length;i++){
-      view.setUint8(offset+i,text.charCodeAt(i));
-    }
-  }
+function makeWav(){
+  const rate=22050,seconds=1.15;
+  const count=Math.floor(rate*seconds);
+  const b=new ArrayBuffer(44+count*2);
+  const d=new DataView(b);
+  const word=(p,s)=>{
+    for(let i=0;i<s.length;i++)d.setUint8(p+i,s.charCodeAt(i));
+  };
 
   word(0,'RIFF');
-  view.setUint32(4,36+count*2,true);
+  d.setUint32(4,36+count*2,true);
   word(8,'WAVE');
   word(12,'fmt ');
-  view.setUint32(16,16,true);
-  view.setUint16(20,1,true);
-  view.setUint16(22,1,true);
-  view.setUint32(24,sampleRate,true);
-  view.setUint32(28,sampleRate*2,true);
-  view.setUint16(32,2,true);
-  view.setUint16(34,16,true);
+  d.setUint32(16,16,true);
+  d.setUint16(20,1,true);
+  d.setUint16(22,1,true);
+  d.setUint32(24,rate,true);
+  d.setUint32(28,rate*2,true);
+  d.setUint16(32,2,true);
+  d.setUint16(34,16,true);
   word(36,'data');
-  view.setUint32(40,count*2,true);
+  d.setUint32(40,count*2,true);
 
-  // 「ピピッ、ピピッ」という電子音
   const pulses=[
-    [0.00,0.16,880],
-    [0.23,0.39,1100],
-    [0.60,0.76,880],
-    [0.83,0.99,1100]
+    [0,.15,880],[.22,.37,1100],
+    [.55,.7,880],[.77,.92,1100]
   ];
 
   for(let i=0;i<count;i++){
-    const t=i/sampleRate;
-    let sample=0;
+    const t=i/rate;
+    let value=0;
 
-    for(const [start,end,freq] of pulses){
-      if(t>=start&&t<end){
-        const progress=(t-start)/(end-start);
-        const envelope=Math.sin(Math.PI*progress);
-        sample=
-          0.48*envelope*(
-            0.8*Math.sin(2*Math.PI*freq*t)+
-            0.2*Math.sin(2*Math.PI*freq*2*t)
-          );
+    for(const [a,z,f] of pulses){
+      if(t>=a&&t<z){
+        const env=Math.sin(Math.PI*(t-a)/(z-a));
+        value=.5*env*Math.sin(2*Math.PI*f*t);
         break;
       }
     }
 
-    view.setInt16(
-      44+i*2,
-      Math.round(Math.max(-1,Math.min(1,sample))*32767),
-      true
-    );
+    d.setInt16(44+i*2,Math.round(value*32767),true);
   }
 
   return URL.createObjectURL(
-    new Blob([buffer],{type:'audio/wav'})
+    new Blob([b],{type:'audio/wav'})
   );
 }
 
-// ========================================
-// HTML Audioを使用
-// ========================================
-
 function prepareAudio(){
-  try{
-    if(navigator.audioSession){
-      navigator.audioSession.type='playback';
-    }
-  }catch(e){}
-
-  if(!alarmAudio){
-    alarmURL=createAlarmWav();
-    alarmAudio=document.createElement('audio');
-    alarmAudio.src=alarmURL;
-    alarmAudio.preload='auto';
-    alarmAudio.loop=true;
-    alarmAudio.volume=1;
-    alarmAudio.setAttribute('playsinline','');
-    document.body.appendChild(alarmAudio);
+  if(!alarm){
+    alarm=new Audio(makeWav());
+    alarm.preload='auto';
+    alarm.loop=true;
   }
-
-  $('audioState').textContent='警報音：準備済み';
+  if(!recorded){
+    recorded=new Audio();
+  }
 }
 
-// iPhoneのタップ操作中に実際に再生して音を有効化
-function unlockAudio(){
+// ユーザーのタップで再生を準備
+function primeAudio(){
   prepareAudio();
-
-  if(alarmWanted){
-    playAlarm();
+  if(alertWanted){
+    playAlert();
     return;
   }
 
-  alarmAudio.loop=false;
+  alarm.loop=false;
+  alarm.currentTime=0;
+  const p=alarm.play();
+  if(p)p.catch(()=>{});
 
-  try{
-    alarmAudio.currentTime=0;
-  }catch(e){}
-
-  const result=alarmAudio.play();
-
-  if(result){
-    result.then(()=>{
-      $('audioState').textContent='警報音：再生可能';
-    }).catch(e=>{
-      $('audioState').textContent=
-        '警報音：再生許可が必要 ('+e.name+')';
-    });
-  }
-
-  // 最初の短い確認音のみ再生
   setTimeout(()=>{
-    if(!alarmWanted&&alarmAudio){
-      alarmAudio.pause();
-      try{alarmAudio.currentTime=0}catch(e){}
-      alarmAudio.loop=true;
+    if(!alertWanted){
+      alarm.pause();
+      alarm.currentTime=0;
+      alarm.loop=true;
     }
-  },300);
-}
-
-function playAlarm(){
-  if(!alarmAudio||!alarmWanted||document.hidden)return;
-
-  alarmAudio.loop=true;
-
-  try{
-    alarmAudio.currentTime=0;
-  }catch(e){}
-
-  const result=alarmAudio.play();
-
-  if(result){
-    result.then(()=>{
-      $('audioState').textContent='警報音：再生中';
-    }).catch(e=>{
-      $('audioState').textContent=
-        '警報音：再生できません ('+e.name+')';
-      status(
-        '● 警報を再生できません',
-        '「監視を再開する」または音声テストをタップしてください。',
-        'error'
-      );
-    });
-  }
-}
-
-function stopAlarmSound(){
-  if(!alarmAudio)return;
-  alarmAudio.pause();
-  try{alarmAudio.currentTime=0}catch(e){}
-  alarmAudio.loop=true;
-  $('audioState').textContent='警報音：待機中';
+  },120);
 }
 
 function stopAlert(){
-  alertToken++;
-  alarmWanted=false;
+  soundToken++;
+  alertWanted=false;
+  clearTimeout(soundFallback);
 
-  clearTimeout(voiceTimeout);
-  voiceTimeout=null;
-
-  stopAlarmSound();
-
-  if('speechSynthesis' in window){
-    try{speechSynthesis.cancel()}catch(e){}
+  if(alarm){
+    alarm.pause();
+    alarm.currentTime=0;
+  }
+  if(recorded){
+    recorded.pause();
+    recorded.currentTime=0;
   }
 }
 
-// ========================================
-// 音声注意の後にアラーム
-// ========================================
+function playAlert(){
+  if(!alertWanted||document.hidden)return;
 
-function voiceThenAlarm(){
-  const token=++alertToken;
+  prepareAudio();
 
-  if(!$('voice').checked||
-     !('speechSynthesis' in window)){
-    playAlarm();
+  const token=++soundToken;
+  clearTimeout(soundFallback);
+
+  const ring=()=>{
+    if(token!==soundToken||!alertWanted)return;
+    clearTimeout(soundFallback);
+
+    alarm.loop=true;
+    alarm.currentTime=0;
+
+    alarm.play().catch(()=>{
+      status('● アラーム再生が制限されました',
+        '画面の再接続ボタンを押して音声を有効化してください。','error');
+    });
+  };
+
+  const clip=localStorage.getItem(VOICE);
+
+  if(!clip){
+    ring();
     return;
   }
 
-  let done=false;
+  recorded.src=clip;
+  recorded.currentTime=0;
+  recorded.onended=ring;
+  recorded.onerror=ring;
 
-  const finish=()=>{
-    if(done)return;
-    done=true;
-    clearTimeout(voiceTimeout);
-    voiceTimeout=null;
-
-    if(token===alertToken&&alarmWanted){
-      playAlarm();
-    }
-  };
-
-  // 音声が終了しない場合の保険
-  voiceTimeout=setTimeout(finish,3500);
-
-  try{
-    speechSynthesis.cancel();
-
-    const utterance=new SpeechSynthesisUtterance(
-      '勉強してください。'
-    );
-    utterance.lang='ja-JP';
-    utterance.rate=1.05;
-    utterance.onend=finish;
-    utterance.onerror=finish;
-
-    speechSynthesis.speak(utterance);
-  }catch(e){
-    finish();
-  }
+  soundFallback=setTimeout(ring,4500);
+  recorded.play().catch(ring);
 }
 
-function warn(){
+function warning(playNow=true){
   if(!session||warned)return;
 
   warned=true;
   session.warnings++;
-  alarmWanted=true;
+  alertWanted=true;
 
-  status(
-    '● 勉強してください',
-    '音声注意の後、アラームが鳴ります。',
-    'warning'
-  );
+  status('● 勉強してください',
+    '離席またはアプリ切替を検知しました。','warn');
 
   render();
-  voiceThenAlarm();
+
+  if(playNow)playAlert();
 }
 
-// ========================================
-// 音声とアラームのテスト
-// ========================================
+// ======================================
+// 注意音声を事前録音
+// ======================================
 
-function testSound(){
+async function recordVoice(){
   if(session){
-    status(
-      '● テストは監視終了後に実行',
-      '現在の監視を終了してからテストしてください。'
-    );
+    $('recordStatus').textContent=
+      '監視を終了してから録音してください。';
     return;
   }
 
-  clearTimeout(testTimeout);
-  stopAlert();
-
-  // ここはユーザーのタップ操作内で実行
-  unlockAudio();
-
-  let finished=false;
-  let fallback=null;
-
-  const playTest=()=>{
-    if(finished)return;
-    finished=true;
-    clearTimeout(fallback);
-
-    alarmWanted=true;
-    playAlarm();
-
-    testTimeout=setTimeout(()=>{
-      stopAlert();
-      status('✓ 音声テスト完了','警報音を停止しました。');
-    },3000);
-  };
-
-  if(!$('voice').checked||
-     !('speechSynthesis' in window)){
-    setTimeout(playTest,450);
-    return;
-  }
+  let mic;
 
   try{
-    const u=new SpeechSynthesisUtterance(
-      '勉強してください。'
-    );
-    u.lang='ja-JP';
-    u.rate=1.05;
-    u.onend=playTest;
-    u.onerror=playTest;
+    mic=await navigator.mediaDevices.getUserMedia({
+      audio:true,video:false
+    });
 
-    fallback=setTimeout(playTest,3500);
-    speechSynthesis.speak(u);
+    const options=MediaRecorder.isTypeSupported('audio/mp4')
+      ? {mimeType:'audio/mp4'}:{};
+
+    const rec=new MediaRecorder(mic,options);
+    const chunks=[];
+
+    rec.ondataavailable=e=>{
+      if(e.data.size)chunks.push(e.data);
+    };
+
+    rec.onstop=()=>{
+      mic.getTracks().forEach(t=>t.stop());
+
+      const blob=new Blob(chunks,{
+        type:rec.mimeType||'audio/mp4'
+      });
+
+      const reader=new FileReader();
+
+      reader.onload=()=>{
+        try{
+          localStorage.setItem(VOICE,reader.result);
+          $('recordStatus').textContent=
+            '✓ 注意音声を保存しました。離席時に再生します。';
+        }catch{
+          $('recordStatus').textContent=
+            '録音を保存できませんでした。';
+        }
+      };
+
+      reader.readAsDataURL(blob);
+    };
+
+    rec.start();
+
+    $('recordStatus').textContent=
+      '● 録音中！「勉強してください」と話してください。';
+
+    setTimeout(()=>{
+      if(rec.state==='recording')rec.stop();
+    },3000);
+
   }catch(e){
-    setTimeout(playTest,450);
+    if(mic)mic.getTracks().forEach(t=>t.stop());
+    $('recordStatus').textContent=
+      '録音できませんでした：'+(e.message||e.name);
   }
 }
 
-// ========================================
-// カメラ
-// ========================================
+// ======================================
+// カメラとAI
+// ======================================
 
 function stopCamera(){
   cancelAnimationFrame(frameId);
+  frameId=0;
 
-  if(stream){
-    stream.getTracks().forEach(track=>track.stop());
-    stream=null;
+  const old=stream;
+  stream=null;
+
+  video.pause();
+  video.srcObject=null;
+
+  if(old){
+    old.getTracks().forEach(t=>t.stop());
+  }
+}
+
+async function openCamera(){
+  const s=await navigator.mediaDevices.getUserMedia({
+    audio:false,
+    video:{
+      facingMode:'user',
+      width:{ideal:320},
+      height:{ideal:240},
+      frameRate:{ideal:10,max:15}
+    }
+  });
+
+  if(document.hidden){
+    s.getTracks().forEach(t=>t.stop());
+    throw new Error('画面が非表示です');
   }
 
-  $('video').srcObject=null;
+  stream=s;
+  video.srcObject=s;
+
+  await video.play();
+
+  const track=s.getVideoTracks()[0];
+
+  track.addEventListener('ended',()=>{
+    if(stream===s)recoverCamera('映像の接続が終了しました');
+  });
+
+  track.addEventListener('mute',()=>{
+    if(stream===s){
+      $('diagnostic').textContent='カメラ状態：映像が一時停止';
+    }
+  });
+
+  lastVideoTime=-1;
+  lastAdvanceAt=Date.now();
+  captureStartedAt=Date.now();
+
+  $('diagnostic').textContent='カメラ状態：稼働中';
 }
 
 async function loadDetector(){
@@ -530,138 +482,79 @@ async function loadDetector(){
   const {FilesetResolver,PoseLandmarker}=
     await import(BASE+'/vision_bundle.mjs');
 
-  const vision=
-    await FilesetResolver.forVisionTasks(BASE+'/wasm');
+  const vision=await FilesetResolver.forVisionTasks(BASE+'/wasm');
 
-  detector=await PoseLandmarker.createFromOptions(
-    vision,{
-      baseOptions:{
-        modelAssetPath:MODEL,
-        delegate:'CPU'
-      },
-      runningMode:'VIDEO',
-      numPoses:1,
-      minPoseDetectionConfidence:0.55,
-      minTrackingConfidence:0.5
-    }
-  );
+  detector=await PoseLandmarker.createFromOptions(vision,{
+    baseOptions:{
+      modelAssetPath:MODEL,
+      delegate:'CPU'
+    },
+    runningMode:'VIDEO',
+    numPoses:1,
+    minPoseDetectionConfidence:.5,
+    minTrackingConfidence:.5
+  });
 }
 
-// ========================================
-// 学習時間計算
-// ========================================
+function resetDetection(){
+  foundCount=0;
+  presentConfirmed=false;
+  lastSeen=Date.now();
+  lastInfer=0;
+  detectErrors=0;
 
-function accrue(now){
-  if(!session)return;
-
-  const delta=Math.max(0,(now-session.last)/1000);
-  session.last=now;
-
-  if(
-    phase==='running'||
-    (pendingCamera&&['paused','loading'].includes(phase))
-  ){
-    session.elapsed+=delta;
-
-    if(pendingCamera||awaySince){
-      session.away+=delta;
-    }else if(foundFrames>=2){
-      session.present+=delta;
-    }else{
-      session.unknown+=delta;
-    }
+  if(!pendingCamera){
+    awaySince=0;
+    warned=false;
   }
 }
 
-// ========================================
-// 監視開始
-// ========================================
+async function recoverCamera(reason){
+  if(recovering||phase!=='running'||document.hidden)return;
 
-async function start(){
-  if(['running','loading','background'].includes(phase))return;
+  if(recoveryCount>=2){
+    phase='paused';
+    stopCamera();
+    stopAlert();
 
-  const isNew=!session;
+    status('● カメラが停止しました',
+      '自動復旧の上限に達しました。再接続ボタンを押してください。','error');
 
-  // 最初のタップで音を有効化
-  unlockAudio();
-
-  if(isNew&&$('voice').checked&&
-     'speechSynthesis' in window){
-    try{
-      const u=new SpeechSynthesisUtterance(
-        '監視を開始します。'
-      );
-      u.lang='ja-JP';
-      u.rate=1.05;
-      speechSynthesis.speak(u);
-    }catch(e){}
+    $('diagnostic').textContent='カメラ状態：手動復旧待ち';
+    render();
+    return;
   }
 
-  phase='loading';
-  status('● カメラ準備中','カメラを許可してください。');
+  recovering=true;
+  recoveryCount++;
+  accrue(Date.now());
+  phase='recovering';
+
+  stopCamera();
+  stopAlert();
+
+  status('● カメラを復旧中',reason,'warn');
+  $('diagnostic').textContent='カメラ状態：再接続中';
   render();
 
   try{
-    stream=await navigator.mediaDevices.getUserMedia({
-      audio:false,
-      video:{
-        facingMode:'user',
-        width:{ideal:640},
-        height:{ideal:480}
-      }
-    });
+    await openCamera();
+    resetDetection();
 
-    $('video').srcObject=stream;
-    await $('video').play();
-
-    await loadDetector();
-
-    if(document.hidden){
-      throw new Error('画面を表示して再開してください。');
-    }
-
-    if(isNew){
-      session={
-        started:new Date().toISOString(),
-        elapsed:0,
-        present:0,
-        away:0,
-        unknown:0,
-        warnings:0,
-        last:Date.now()
-      };
-    }
-
-    session.last=Date.now();
     phase='running';
-    foundFrames=0;
-
-    if(!pendingCamera){
-      awaySince=0;
-      warned=false;
-      lastSeen=Date.now();
-    }
-
-    lastFrame=0;
-    status('● 監視中','人物を検知しています。');
+    status('● 監視を再開しました','カメラを再接続しました。');
     render();
     loop();
 
   }catch(e){
-    stopCamera();
-    phase=session?'paused':'idle';
-    status(
-      '● 開始できませんでした',
-      e.message||'カメラの起動に失敗しました。',
-      'error'
-    );
+    phase='paused';
+    status('● 復旧に失敗しました',
+      '再接続ボタンを押してください：'+e.message,'error');
     render();
+  }finally{
+    recovering=false;
   }
 }
-
-// ========================================
-// 人物検知
-// ========================================
 
 function loop(){
   if(phase!=='running')return;
@@ -669,92 +562,210 @@ function loop(){
   frameId=requestAnimationFrame(loop);
 
   const now=performance.now();
-  if(now-lastFrame<450||$('video').readyState<2)return;
 
-  lastFrame=now;
+  // 画像解析は約1.2秒に1回
+  if(now-lastInfer<1200||video.readyState<2)return;
+
+  // 新しいフレームだけを解析
+  if(video.currentTime===lastVideoTime)return;
+
+  lastInfer=now;
 
   try{
-    const result=detector.detectForVideo($('video'),now);
+    const result=detector.detectForVideo(video,now);
+    detectErrors=0;
+
     const found=!!result.landmarks?.length;
     const t=Date.now();
 
     if(found){
-      foundFrames++;
+      foundCount++;
 
-      if(foundFrames>=2){
-        if(alarmWanted||awaySince){
-          stopAlert();
-        }
-
+      if(foundCount>=2){
+        stopAlert();
         pendingCamera=false;
         awaySince=0;
         warned=false;
+        presentConfirmed=true;
         lastSeen=t;
 
-        status('● 在席を確認中','勉強を続けましょう。');
+        status('● 在席を確認中','学習を続けましょう。');
       }
 
     }else{
-      foundFrames=0;
+      foundCount=0;
 
       if(pendingCamera||t-lastSeen>3000){
+        presentConfirmed=false;
         if(!awaySince)awaySince=t;
 
-        const elapsed=(t-awaySince)/1000;
+        const seconds=(t-awaySince)/1000;
 
         if(!warned){
-          status(
-            '● 離席の可能性',
-            Math.floor(elapsed)+'秒間人物を検出できません。',
-            'warning'
-          );
+          status('● 離席の可能性',
+            Math.floor(seconds)+'秒間、人物が検出できません。','warn');
         }
 
-        if(elapsed>=Number($('threshold').value)){
-          warn();
+        if(seconds>=Number($('threshold').value)){
+          warning();
         }
       }
     }
 
   }catch(e){
+    detectErrors++;
+
+    if(detectErrors>=3){
+      phase='paused';
+      stopCamera();
+      stopAlert();
+
+      status('● AI解析が停止しました',
+        '再接続ボタンを押してください：'+e.message,'error');
+
+      render();
+    }
+  }
+}
+
+// ======================================
+// 時計・学習記録
+// ======================================
+
+function accrue(now){
+  if(!session)return;
+
+  const dt=Math.max(0,(now-session.last)/1000);
+  session.last=now;
+
+  if(phase==='running'){
+    session.elapsed+=dt;
+
+    if(awaySince||pendingCamera)session.away+=dt;
+    else if(presentConfirmed)session.present+=dt;
+    else session.unknown+=dt;
+
+  }else if(phase==='recovering'){
+    session.elapsed+=dt;
+    session.unknown+=dt;
+
+  }else if(phase==='paused'){
+    session.elapsed+=dt;
+
+    if(pendingCamera)session.away+=dt;
+    else session.unknown+=dt;
+  }
+}
+
+// ======================================
+// 監視開始・再開
+// ======================================
+
+async function start(){
+  if(['starting','running','recovering','background'].includes(phase))return;
+
+  primeAudio();
+
+  const isNew=!session;
+
+  if(session)accrue(Date.now());
+
+  phase='starting';
+  status('● 準備中','カメラを起動しています。');
+  render();
+
+  try{
+    await openCamera();
+    await loadDetector();
+
+    if(isNew){
+      session={
+        started:new Date().toISOString(),
+        elapsed:0,present:0,away:0,unknown:0,
+        warnings:0,last:Date.now()
+      };
+    }
+
+    session.last=Date.now();
+
+    resetDetection();
+    recoveryCount=0;
+    phase='running';
+
+    // アプリ切替後の警報は再開操作時に開始
+    if(alertWanted)playAlert();
+
+    status('● 監視中','人物を検出しています。');
+    render();
+    loop();
+
+  }catch(e){
     stopCamera();
-    stopAlert();
-    phase='paused';
-    status('● 監視中断','再開してください。','error');
+    phase=session?'paused':'idle';
+
+    status('● カメラを開始できません',
+      e.message||'起動に失敗しました。','error');
     render();
   }
 }
 
-// ========================================
-// アプリ切替
-// ========================================
+// ======================================
+// カメラ停止監視
+// ======================================
 
-function toBackground(){
-  if(!session||!['running','paused'].includes(phase))return;
+setInterval(()=>{
+  if(phase!=='running'||document.hidden||recovering)return;
 
   const now=Date.now();
-  accrue(now);
+  const track=stream?.getVideoTracks()[0];
+
+  if(!track||track.readyState!=='live'){
+    recoverCamera('カメラ接続が切れました');
+    return;
+  }
+
+  if(video.paused){
+    video.play().catch(()=>{});
+  }
+
+  if(video.currentTime>lastVideoTime+.04){
+    lastVideoTime=video.currentTime;
+    lastAdvanceAt=now;
+  }
+
+  if(track.muted||now-lastAdvanceAt>8000){
+    recoverCamera('映像が更新されなくなりました');
+    return;
+  }
+
+  if(now-captureStartedAt>30000){
+    recoveryCount=0;
+  }
+
+  $('diagnostic').textContent=
+    'カメラ状態：稼働中 / '+Math.round(video.currentTime)+'秒';
+},2000);
+
+// ======================================
+// アプリ切替
+// ======================================
+
+function onHide(){
+  if(!session||phase!=='running')return;
+
+  accrue(Date.now());
+
+  backgroundAt=Date.now();
+  phase='background';
+  pendingCamera=true;
+  awaySince=backgroundAt;
 
   stopCamera();
   stopAlert();
-
-  backgroundAt=now;
-  awaySince=now;
-  phase='background';
-  pendingCamera=true;
-  warned=false;
-  foundFrames=0;
-
-  status(
-    '● 他アプリに切替',
-    '切替時間を離席として記録します。',
-    'warning'
-  );
-
   render();
 }
 
-function fromBackground(){
+function onShow(){
   if(!session||phase!=='background'||!backgroundAt)return;
 
   const now=Date.now();
@@ -766,36 +777,34 @@ function fromBackground(){
 
   awaySince=backgroundAt;
   backgroundAt=0;
+
   phase='paused';
   pendingCamera=true;
   warned=false;
 
   if(seconds>=Number($('threshold').value)){
-    warn();
-  }else{
-    status(
-      '● アプリ切替を記録',
-      Math.floor(seconds)+'秒間を離席に加算しました。',
-      'warning'
-    );
+    warning(false);
   }
+
+  status('● アプリ切替を記録しました',
+    Math.floor(seconds)+'秒間を離席時間に加算しました。監視を再開してください。','warn');
 
   render();
 }
 
 document.addEventListener('visibilitychange',()=>{
-  if(document.hidden)toBackground();
-  else fromBackground();
+  if(document.hidden)onHide();
+  else onShow();
 });
 
-window.addEventListener('pagehide',toBackground);
+window.addEventListener('pagehide',onHide);
 window.addEventListener('pageshow',()=>{
-  if(!document.hidden)fromBackground();
+  if(!document.hidden)onShow();
 });
 
-// ========================================
-// 休憩
-// ========================================
+// ======================================
+// 休憩・終了
+// ======================================
 
 function pause(){
   if(['running','paused'].includes(phase)){
@@ -808,18 +817,17 @@ function pause(){
     awaySince=0;
     warned=false;
 
-    status('☕ 休憩中','休憩時間は学習に含まれません。');
+    status('☕ 休憩中','学習時間の計測を一時停止しています。');
 
   }else if(phase==='break'){
     phase='paused';
+    session.last=Date.now();
+
     status('● 休憩終了','監視を再開してください。');
   }
   render();
+  $('break').textContent=phase==='break'?'▶ 休憩終了':'☕ 休憩';
 }
-
-// ========================================
-// 学習終了
-// ========================================
 
 function finish(){
   if(!session)return;
@@ -829,38 +837,32 @@ function finish(){
   stopAlert();
 
   const data=read(HISTORY,[]);
+
   data.unshift({
     ...session,
     date:new Date().toLocaleString('ja-JP')
   });
 
-  localStorage.setItem(
-    HISTORY,
-    JSON.stringify(data.slice(0,50))
-  );
+  localStorage.setItem(HISTORY,JSON.stringify(data.slice(0,50)));
 
   session=null;
   phase='idle';
-  awaySince=0;
-  backgroundAt=0;
-  warned=false;
   pendingCamera=false;
-  foundFrames=0;
+  backgroundAt=0;
+  awaySince=0;
+  warned=false;
 
   $('timer').textContent='00:00:00';
   $('present').textContent='00:00';
   $('away').textContent='00:00';
   $('warnings').textContent='0回';
 
-  status('✓ セッション保存済み','お疲れさまでした。');
+  status('✓ 保存しました','お疲れさまでした。');
+  $('diagnostic').textContent='カメラ状態：待機中';
 
   render();
   showHistory();
 }
-
-// ========================================
-// 履歴
-// ========================================
 
 function showHistory(){
   const data=read(HISTORY,[]);
@@ -877,40 +879,73 @@ function showHistory(){
   data.slice(0,10).forEach(s=>{
     const li=document.createElement('li');
     li.textContent=
-      `${s.date} — 学習 ${short(s.elapsed)} / `+
-      `在席 ${short(s.present)} / `+
-      `離席 ${short(s.away)} / `+
+      `${s.date} — 合計 ${hms(s.elapsed)} / `+
+      `在席 ${hms(s.present)} / `+
+      `離席 ${hms(s.away)} / `+
       `注意 ${s.warnings}回`;
     list.appendChild(li);
   });
 }
 
-// ========================================
-// イベント
-// ========================================
+// ======================================
+// 操作ボタン
+// ======================================
 
 $('start').onclick=start;
 $('break').onclick=pause;
 $('finish').onclick=finish;
-$('test').onclick=testSound;
+$('record').onclick=recordVoice;
+
+$('repair').onclick=()=>{
+  if(!session)return;
+
+  if(phase==='running'){
+    accrue(Date.now());
+    stopCamera();
+    phase='paused';
+  }
+
+  start();
+};
+
+$('test').onclick=()=>{
+  prepareAudio();
+  stopAlert();
+
+  alarm.loop=false;
+  alarm.currentTime=0;
+
+  alarm.play().catch(e=>{
+    status('● アラームの再生に失敗',
+      e.message,'error');
+  });
+
+  setTimeout(()=>{
+    alarm.pause();
+    alarm.currentTime=0;
+    alarm.loop=true;
+  },3000);
+};
 
 setInterval(()=>{
-  if(!session||phase==='background')return;
+  if(!session||phase==='background'||phase==='break')return;
 
   accrue(Date.now());
 
-  if(
-    pendingCamera&&
-    ['paused','loading'].includes(phase)&&
-    awaySince&&!warned&&
-    Date.now()-awaySince>=
-      Number($('threshold').value)*1000
-  ){
-    warn();
+  if(phase==='paused'&&pendingCamera&&
+     !warned&&awaySince&&
+     Date.now()-awaySince>=
+       Number($('threshold').value)*1000){
+    warning(false);
   }
 
   render();
 },1000);
+
+if(localStorage.getItem(VOICE)){
+  $('recordStatus').textContent=
+    '✓ 録音済みの注意音声があります。';
+}
 
 showHistory();
 render();
